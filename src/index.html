@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ePanda Commerce - Modern Shopping Experience</title>
+    <meta
+      name="description"
+      content="Discover premium headphones, TVs, bags, shoes, and more at ePanda Commerce. Shop with confidence."
+    />
+    <link rel="icon" type="image/png" href="images/favicon1.png" />
+
+    <!-- Tailwind CSS with DaisyUI -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@2.6.0/dist/full.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+    />
+
+    <!-- Google Fonts (already imported in CSS, but kept for redundancy) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css" />
+
+    <!-- Tailwind Config -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              poppins: ["Poppins", "sans-serif"],
+            },
+            colors: {
+              panda: {
+                primary: "#FF589B",
+                secondary: "#FEEAE9",
+              },
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+
+  <body class="font-poppins">
+    <!-- Header Section -->
+    <header class="sticky top-0 z-50">
+      <div class="navbar bg-base-100 shadow-lg">
+        <div class="navbar-start">
+          <div class="dropdown">
+            <label tabindex="0" class="btn btn-ghost lg:hidden">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 6h16M4 12h8m-8 6h16"
+                />
+              </svg>
+            </label>
+            <ul
+              tabindex="0"
+              class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
+            >
+              <li><a href="#home">Home</a></li>
+              <li><a href="#shoe">Shoes</a></li>
+              <li><a href="#bag">Backpack</a></li>
+              <li><a href="#subscribe">Subscribe</a></li>
+            </ul>
+          </div>
+          <a class="btn btn-ghost normal-case text-xl" href="#">
+            <img
+              src="images/logo.png"
+              alt="ePanda Commerce Logo"
+              class="h-10"
+            />
+            <span class="hidden md:inline-block ml-2">ePanda Commerce</span>
+          </a>
+        </div>
+        <div class="navbar-center hidden lg:flex">
+          <ul class="menu menu-horizontal p-0">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#shoe">Shoes</a></li>
+            <li><a href="#bag">Backpack</a></li>
+            <li><a href="#subscribe">Subscribe</a></li>
+          </ul>
+        </div>
+        <div class="navbar-end">
+          <div class="dropdown dropdown-end">
+            <label tabindex="0" class="btn btn-ghost btn-circle">
+              <div class="indicator">
+                <i class="fa-solid fa-cart-shopping text-xl"></i>
+                <span
+                  class="badge badge-sm indicator-item bg-pink-500 border-0 text-white"
+                  >0</span
+                >
+              </div>
+            </label>
+            <div
+              tabindex="0"
+              class="mt-3 card card-compact dropdown-content w-52 bg-base-100 shadow"
+            >
+              <div class="card-body">
+                <span class="font-bold text-lg"
+                  ><span id="cart-count">0</span> Items</span
+                >
+                <span class="text-info"
+                  >Subtotal: $<span id="cart-total">0</span></span
+                >
+                <div class="card-actions">
+                  <button class="btn btn-primary btn-block">View cart</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="dropdown dropdown-end ml-2">
+            <label tabindex="0" class="btn btn-ghost btn-circle avatar">
+              <div class="w-10 rounded-full">
+                <img
+                  src="https://placeimg.com/80/80/people"
+                  alt="User Avatar"
+                />
+              </div>
+            </label>
+            <ul
+              tabindex="0"
+              class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
+            >
+              <li><a>Profile</a></li>
+              <li><a>Orders</a></li>
+              <li><a>Settings</a></li>
+              <li><a>Logout</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Hero Carousel -->
+    <section class="container mx-auto px-4 py-8" id="home">
+      <div class="carousel w-full rounded-xl h-96 md:h-[32rem]">
+        <!-- Slide 1 -->
+        <div id="slide1" class="carousel-item relative w-full">
+          <div class="hero min-h-full rounded-xl bg-pink-50">
+            <div class="hero-content flex-col lg:flex-row-reverse">
+              <img
+                src="images/banner-images/headphone.png"
+                alt="Cool Dude Headphone"
+                class="max-w-sm rounded-lg object-contain"
+              />
+              <div>
+                <h1 class="text-4xl md:text-5xl font-bold">
+                  Cool Dude Headphone
+                </h1>
+                <p class="py-6 text-base md:text-lg">
+                  Experience superior sound quality with our premium headphones,
+                  perfect for immersive audio experiences.
+                </p>
+                <h2 class="text-2xl md:text-3xl font-bold text-pink-500">
+                  $9900
+                </h2>
+                <button class="btn btn-primary mt-4">
+                  Buy Now <i class="fa-solid fa-arrow-right ml-2"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div
+            class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2"
+          >
+            <a href="#slide3" class="btn btn-circle">❮</a>
+            <a href="#slide2" class="btn btn-circle">❯</a>
+          </div>
+        </div>
+
+        <!-- Slide 2 -->
+        <div id="slide2" class="carousel-item relative w-full">
+          <div class="hero min-h-full rounded-xl bg-pink-50">
+            <div class="hero-content flex-col lg:flex-row-reverse">
+              <img
+                src="images/banner-images/tv.png"
+                alt="Mega LCD TV"
+                class="max-w-sm rounded-lg object-contain"
+              />
+              <div>
+                <h1 class="text-4xl md:text-5xl font-bold">
+                  Mega LCD TV For Sports
+                </h1>
+                <p class="py-6 text-base md:text-lg">
+                  Enjoy crystal-clear visuals and vibrant colors on our
+                  high-performance LCD TV, ideal for sports enthusiasts.
+                </p>
+                <h2 class="text-2xl md:text-3xl font-bold text-pink-500">
+                  $1300
+                </h2>
+                <button class="btn btn-primary mt-4">
+                  Buy Now <i class="fa-solid fa-arrow-right ml-2"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div
+            class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2"
+          >
+            <a href="#slide1" class="btn btn-circle">❮</a>
+            <a href="#slide3" class="btn btn-circle">❯</a>
+          </div>
+        </div>
+
+        <!-- Slide 3 -->
+        <div id="slide3" class="carousel-item relative w-full">
+          <div class="hero min-h-full rounded-xl bg-pink-50">
+            <div class="hero-content flex-col lg:flex-row-reverse">
+              <img
+                src="images/banner-images/xbox.png"
+                alt="X-Box Gaming Console"
+                class="max-w-sm rounded-lg object-contain"
+              />
+              <div>
+                <h1 class="text-4xl md:text-5xl font-bold">
+                  X-Box for Your Living Room
+                </h1>
+                <p class="py-6 text-base md:text-lg">
+                  Elevate your gaming with our powerful X-Box console, designed
+                  for ultimate entertainment in your home.
+                </p>
+                <h2 class="text-2xl md:text-3xl font-bold text-pink-500">
+                  $1340
+                </h2>
+                <button class="btn btn-primary mt-4">
+                  Buy Now <i class="fa-solid fa-arrow-right ml-2"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div
+            class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2"
+          >
+            <a href="#slide2" class="btn btn-circle">❮</a>
+            <a href="#slide1" class="btn btn-circle">❯</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="container mx-auto px-4 py-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Watch Category -->
+        <div class="card card-side bg-orange-400 shadow-xl text-white">
+          <figure class="p-4">
+            <img
+              src="images/categories/watch.png"
+              alt="Watch Category"
+              class="w-20 h-20 object-contain"
+            />
+          </figure>
+          <div class="card-body p-4">
+            <h2 class="card-title text-xl md:text-2xl">Watch</h2>
+            <a href="#" class="link link-hover text-white text-sm md:text-base">
+              Explore <i class="fa-solid fa-arrow-right ml-1"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Bag Category -->
+        <div class="card card-side bg-pink-500 shadow-xl text-white">
+          <figure class="p-4">
+            <img
+              src="images/categories/bag.png"
+              alt="Bag Category"
+              class="w-20 h-20 object-contain"
+            />
+          </figure>
+          <div class="card-body p-4">
+            <h2 class="card-title text-xl md:text-2xl">Bag</h2>
+            <a
+              href="#bag"
+              class="link link-hover text-white text-sm md:text-base"
+            >
+              Explore <i class="fa-solid fa-arrow-right ml-1"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Shoes Category -->
+        <div class="card card-side bg-blue-500 shadow-xl text-white">
+          <figure class="p-4">
+            <img
+              src="images/categories/shoes.png"
+              alt="Shoes Category"
+              class="w-20 h-20 object-contain"
+            />
+          </figure>
+          <div class="card-body p-4">
+            <h2 class="card-title text-xl md:text-2xl">Shoes</h2>
+            <a
+              href="#shoe"
+              class="link link-hover text-white text-sm md:text-base"
+            >
+              Explore <i class="fa-solid fa-arrow-right ml-1"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Shoes Section -->
+    <section class="container mx-auto px-4 py-8" id="shoe">
+      <div class="flex justify-between items-center mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold">Shoes</h2>
+        <a href="#" class="btn btn-ghost text-sm md:text-base">
+          See All <i class="fa-solid fa-arrow-right ml-2"></i>
+        </a>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Shoe 1 -->
+        <div class="card card-compact bg-base-100 shadow-xl">
+          <figure class="px-6 pt-6">
+            <img
+              src="images/shoes/shoe-1.png"
+              alt="Supply 350 Shoes"
+              class="rounded-xl h-60 object-contain w-full"
+            />
+          </figure>
+          <div class="card-body">
+            <h2 class="card-title text-xl">Supply 350</h2>
+            <p class="text-base">
+              Comfortable and stylish shoes designed for everyday wear, with
+              superior cushioning and durability.
+            </p>
+            <div class="card-actions justify-between items-center mt-4">
+              <span class="text-xl md:text-2xl font-bold text-pink-500"
+                >$232</span
+              >
+              <button class="btn btn-primary">Buy Now</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Shoe 2 -->
+        <div class="card card-compact bg-base-100 shadow-xl">
+          <figure class="px-6 pt-6">
+            <img
+              src="images/shoes/shoe-2.png"
+              alt="Nike 360 Shoes"
+              class="rounded-xl h-60 object-contain w-full"
+            />
+          </figure>
+          <div class="card-body">
+            <h2 class="card-title text-xl">Nike 360</h2>
+            <p class="text-base">
+              High-performance athletic shoes with advanced support for running
+              and sports activities.
+            </p>
+            <div class="card-actions justify-between items-center mt-4">
+              <span class="text-xl md:text-2xl font-bold text-pink-500"
+                >$334</span
+              >
+              <button class="btn btn-primary">Buy Now</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Shoe 3 -->
+        <div class="card card-compact bg-base-100 shadow-xl">
+          <figure class="px-6 pt-6">
+            <img
+              src="images/shoes/shoe-3.png"
+              alt="Red Air Shoes"
+              class="rounded-xl h-60 object-contain w-full"
+            />
+          </figure>
+          <div class="card-body">
+            <h2 class="card-title text-xl">Red Air</h2>
+            <p class="text-base">
+              Trendy red sneakers offering breathability and style for casual
+              outings.
+            </p>
+            <div class="card-actions justify-between items-center mt-4">
+              <span class="text-xl md:text-2xl font-bold text-pink-500"
+                >$123</span
+              >
+              <button class="btn btn-primary">Buy Now</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Backpack Section -->
+    <section class="container mx-auto px-4 py-8" id="bag">
+      <div class="flex justify-between items-center mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold">Backpack</h2>
+        <a href="#" class="btn btn-ghost text-sm md:text-base">
+          See All <i class="fa-solid fa-arrow-right ml-2"></i>
+        </a>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Bag 1 -->
+        <div class="card card-compact bg-base-100 shadow-xl">
+          <figure class="px-6 pt-6">
+            <img
+              src="images/bags/bag-1.png"
+              alt="Red Color Bag"
+              class="rounded-xl h-60 object-contain w-full"
+            />
+          </figure>
+          <div class="card-body">
+            <h2 class="card-title text-xl">Red Color Bag</h2>
+            <p class="text-base">
+              Spacious red backpack with multiple compartments for daily
+              essentials and travel.
+            </p>
+            <div class="card-actions justify-between items-center mt-4">
+              <span class="text-xl md:text-2xl font-bold text-pink-500"
+                >$437</span
+              >
+              <button class="btn btn-primary">Buy Now</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bag 2 -->
+        <div class="card card-compact bg-base-100 shadow-xl">
+          <figure class="px-6 pt-6">
+            <img
+              src="images/bags/bag-2.png"
+              alt="Blue Color Bag"
+              class="rounded-xl h-60 object-contain w-full"
+            />
+          </figure>
+          <div class="card-body">
+            <h2 class="card-title text-xl">Blue Color Bag</h2>
+            <p class="text-base">
+              Durable blue backpack ideal for school, work, or outdoor
+              adventures.
+            </p>
+            <div class="card-actions justify-between items-center mt-4">
+              <span class="text-xl md:text-2xl font-bold text-pink-500"
+                >$266</span
+              >
+              <button class="btn btn-primary">Buy Now</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bag 3 -->
+        <div class="card card-compact bg-base-100 shadow-xl">
+          <figure class="px-6 pt-6">
+            <img
+              src="images/bags/bag-3.png"
+              alt="Black Color Bag"
+              class="rounded-xl h-60 object-contain w-full"
+            />
+          </figure>
+          <div class="card-body">
+            <h2 class="card-title text-xl">Black Color Bag</h2>
+            <p class="text-base">
+              Sleek black backpack with ergonomic design for comfort and style.
+            </p>
+            <div class="card-actions justify-between items-center mt-4">
+              <span class="text-xl md:text-2xl font-bold text-pink-500"
+                >$777</span
+              >
+              <button class="btn btn-primary">Buy Now</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="container mx-auto px-4 py-8" id="subscribe">
+      <div class="hero bg-pink-50 rounded-xl py-12">
+        <div class="hero-content text-center">
+          <div class="max-w-md">
+            <h2 class="text-2xl md:text-3xl font-bold">LET'S STAY IN TOUCH</h2>
+            <p class="py-4 text-base">
+              Get updates on sales, specials, and more
+            </p>
+            <div class="flex flex-col sm:flex-row gap-2">
+              <input
+                type="email"
+                placeholder="Enter your email"
+                class="input input-bordered w-full"
+                required
+              />
+              <button class="btn btn-primary">Subscribe</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer p-10 bg-neutral text-neutral-content">
+      <div class="container mx-auto text-center">
+        <p>© 2023 ePanda Commerce. All rights reserved. Sofia, Bulgaria.</p>
+        <div class="flex justify-center gap-4 mt-4">
+          <a href="#"><i class="fa-brands fa-facebook text-2xl"></i></a>
+          <a href="#"><i class="fa-brands fa-twitter text-2xl"></i></a>
+          <a href="#"><i class="fa-brands fa-instagram text-2xl"></i></a>
+          <a href="#"><i class="fa-brands fa-linkedin text-2xl"></i></a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- JavaScript (Vite handles TS module) -->
+    <script type="module" src="/src/js/main.ts"></script>
+  </body>
+</html>

@@ -1,0 +1,106 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+
+:root {
+  --panda-primary: #ff589b;
+  --panda-secondary: #feeae9;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+}
+
+/* Custom DaisyUI theme colors */
+.btn-primary {
+  background-color: var(--panda-primary);
+  border-color: var(--panda-primary);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-primary:hover {
+  background-color: #ff3d8b;
+  border-color: #ff3d8b;
+  transform: scale(1.05);
+}
+
+.bg-pink-500 {
+  background-color: var(--panda-primary);
+}
+
+.text-pink-500 {
+  color: var(--panda-primary);
+}
+
+.bg-pink-50 {
+  background-color: var(--panda-secondary);
+}
+
+/* Animation for cards */
+.card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* Category cards hover effect */
+.card-side {
+  transition: background-color 0.3s ease;
+}
+
+.card-side:hover {
+  opacity: 0.95;
+}
+
+/* Image rendering */
+img {
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .hero-content {
+    flex-direction: column;
+    text-align: center;
+  }
+  .card-title {
+    font-size: 1.25rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .carousel {
+    height: 24rem !important;
+  }
+  .text-5xl {
+    font-size: 2.5rem;
+  }
+  .text-3xl {
+    font-size: 1.875rem;
+  }
+  .card-body {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .carousel {
+    height: 20rem !important;
+  }
+  .text-5xl {
+    font-size: 2rem;
+  }
+  .text-3xl {
+    font-size: 1.5rem;
+  }
+  .btn {
+    width: 100%;
+  }
+  .card-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
