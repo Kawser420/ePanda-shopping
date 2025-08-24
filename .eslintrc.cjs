@@ -3,7 +3,7 @@ module.exports = {
     browser: true,
     es2020: true,
   },
-  extends: ["eslint:recommended", "@typescript-eslint/recommended"],
+  extends: ["eslint:recommended"],
   parser: "@typescript-eslint/parser",
   parserOptions: {
     ecmaVersion: 11,
