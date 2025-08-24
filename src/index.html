@@ -11,9 +11,23 @@
     />
     <link rel="icon" type="image/png" href="images/favicon1.png" />
 
+    <!-- Preload critical resources -->
+    <link
+      rel="preload"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      as="style"
+      onload="this.onload=null;this.rel='stylesheet'"
+    />
+    <link
+      rel="preload"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+      as="style"
+      onload="this.onload=null;this.rel='stylesheet'"
+    />
+
     <!-- Tailwind CSS with DaisyUI -->
     <link
-      href="https://cdn.jsdelivr.net/npm/daisyui@2.6.0/dist/full.css"
+      href="https://cdn.jsdelivr.net/npm/daisyui@4.6.0/dist/full.css"
       rel="stylesheet"
       type="text/css"
     />
@@ -25,7 +39,7 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
     />
 
-    <!-- Google Fonts (already imported in CSS, but kept for redundancy) -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -35,6 +49,9 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/style.css" />
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json" />
 
     <!-- Tailwind Config -->
     <script>
@@ -54,15 +71,28 @@
         },
       };
     </script>
+
+    <!-- Alpine.js for interactivity -->
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.0/dist/cdn.min.js"
+    ></script>
   </head>
 
-  <body class="font-poppins">
+  <body
+    class="font-poppins"
+    x-data="{ cartOpen: false, mobileMenuOpen: false }"
+  >
     <!-- Header Section -->
     <header class="sticky top-0 z-50">
       <div class="navbar bg-base-100 shadow-lg">
         <div class="navbar-start">
           <div class="dropdown">
-            <label tabindex="0" class="btn btn-ghost lg:hidden">
+            <label
+              tabindex="0"
+              class="btn btn-ghost lg:hidden"
+              @click="mobileMenuOpen = !mobileMenuOpen"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="h-5 w-5"
@@ -79,13 +109,19 @@
               </svg>
             </label>
             <ul
-              tabindex="0"
+              x-show="mobileMenuOpen"
               class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
             >
-              <li><a href="#home">Home</a></li>
-              <li><a href="#shoe">Shoes</a></li>
-              <li><a href="#bag">Backpack</a></li>
-              <li><a href="#subscribe">Subscribe</a></li>
+              <li><a href="#home" @click="mobileMenuOpen = false">Home</a></li>
+              <li><a href="#shoe" @click="mobileMenuOpen = false">Shoes</a></li>
+              <li>
+                <a href="#bag" @click="mobileMenuOpen = false">Backpack</a>
+              </li>
+              <li>
+                <a href="#subscribe" @click="mobileMenuOpen = false"
+                  >Subscribe</a
+                >
+              </li>
             </ul>
           </div>
           <a class="btn btn-ghost normal-case text-xl" href="#">
@@ -107,25 +143,32 @@
         </div>
         <div class="navbar-end">
           <div class="dropdown dropdown-end">
-            <label tabindex="0" class="btn btn-ghost btn-circle">
+            <label
+              tabindex="0"
+              class="btn btn-ghost btn-circle"
+              @click="cartOpen = !cartOpen"
+            >
               <div class="indicator">
                 <i class="fa-solid fa-cart-shopping text-xl"></i>
                 <span
                   class="badge badge-sm indicator-item bg-pink-500 border-0 text-white"
+                  x-text="$store.cart.count"
                   >0</span
                 >
               </div>
             </label>
             <div
-              tabindex="0"
-              class="mt-3 card card-compact dropdown-content w-52 bg-base-100 shadow"
+              x-show="cartOpen"
+              class="mt-3 card card-compact dropdown-content w-52 bg-base-100 shadow z-50"
             >
               <div class="card-body">
                 <span class="font-bold text-lg"
-                  ><span id="cart-count">0</span> Items</span
+                  ><span x-text="$store.cart.count">0</span> Items</span
                 >
                 <span class="text-info"
-                  >Subtotal: $<span id="cart-total">0</span></span
+                  >Subtotal: $<span x-text="$store.cart.total.toFixed(2)"
+                    >0</span
+                  ></span
                 >
                 <div class="card-actions">
                   <button class="btn btn-primary btn-block">View cart</button>
@@ -153,6 +196,16 @@
       </div>
     </header>
 
+    <!-- Loading Spinner -->
+    <div
+      id="loading-spinner"
+      class="fixed inset-0 bg-white bg-opacity-90 flex items-center justify-center z-50 transition-opacity duration-500"
+    >
+      <div
+        class="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-pink-500"
+      ></div>
+    </div>
+
     <!-- Hero Carousel -->
     <section class="container mx-auto px-4 py-8" id="home">
       <div class="carousel w-full rounded-xl h-96 md:h-[32rem]">
@@ -163,9 +216,10 @@
               <img
                 src="images/banner-images/headphone.png"
                 alt="Cool Dude Headphone"
-                class="max-w-sm rounded-lg object-contain"
+                class="max-w-sm rounded-lg object-contain animate-fade-in"
+                loading="lazy"
               />
-              <div>
+              <div class="animate-slide-up">
                 <h1 class="text-4xl md:text-5xl font-bold">
                   Cool Dude Headphone
                 </h1>
@@ -198,6 +252,7 @@
                 src="images/banner-images/tv.png"
                 alt="Mega LCD TV"
                 class="max-w-sm rounded-lg object-contain"
+                loading="lazy"
               />
               <div>
                 <h1 class="text-4xl md:text-5xl font-bold">
@@ -232,6 +287,7 @@
                 src="images/banner-images/xbox.png"
                 alt="X-Box Gaming Console"
                 class="max-w-sm rounded-lg object-contain"
+                loading="lazy"
               />
               <div>
                 <h1 class="text-4xl md:text-5xl font-bold">
@@ -264,12 +320,15 @@
     <section class="container mx-auto px-4 py-8">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <!-- Watch Category -->
-        <div class="card card-side bg-orange-400 shadow-xl text-white">
+        <div
+          class="card card-side bg-orange-400 shadow-xl text-white hover:scale-105 transition-transform duration-300"
+        >
           <figure class="p-4">
             <img
               src="images/categories/watch.png"
               alt="Watch Category"
               class="w-20 h-20 object-contain"
+              loading="lazy"
             />
           </figure>
           <div class="card-body p-4">
@@ -281,12 +340,15 @@
         </div>
 
         <!-- Bag Category -->
-        <div class="card card-side bg-pink-500 shadow-xl text-white">
+        <div
+          class="card card-side bg-pink-500 shadow-xl text-white hover:scale-105 transition-transform duration-300"
+        >
           <figure class="p-4">
             <img
               src="images/categories/bag.png"
               alt="Bag Category"
               class="w-20 h-20 object-contain"
+              loading="lazy"
             />
           </figure>
           <div class="card-body p-4">
@@ -301,12 +363,15 @@
         </div>
 
         <!-- Shoes Category -->
-        <div class="card card-side bg-blue-500 shadow-xl text-white">
+        <div
+          class="card card-side bg-blue-500 shadow-xl text-white hover:scale-105 transition-transform duration-300"
+        >
           <figure class="p-4">
             <img
               src="images/categories/shoes.png"
               alt="Shoes Category"
               class="w-20 h-20 object-contain"
+              loading="lazy"
             />
           </figure>
           <div class="card-body p-4">
@@ -333,12 +398,15 @@
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <!-- Shoe 1 -->
-        <div class="card card-compact bg-base-100 shadow-xl">
+        <div
+          class="card card-compact bg-base-100 shadow-xl group hover:shadow-2xl transition-all duration-300"
+        >
           <figure class="px-6 pt-6">
             <img
               src="images/shoes/shoe-1.png"
               alt="Supply 350 Shoes"
-              class="rounded-xl h-60 object-contain w-full"
+              class="rounded-xl h-60 object-contain w-full group-hover:scale-110 transition-transform duration-300"
+              loading="lazy"
             />
           </figure>
           <div class="card-body">
@@ -351,18 +419,26 @@
               <span class="text-xl md:text-2xl font-bold text-pink-500"
                 >$232</span
               >
-              <button class="btn btn-primary">Buy Now</button>
+              <button
+                class="btn btn-primary"
+                @click="$store.cart.add({id: 1, name: 'Supply 350', price: 232, category: 'Shoes', image: 'images/shoes/shoe-1.png'})"
+              >
+                Buy Now
+              </button>
             </div>
           </div>
         </div>
 
         <!-- Shoe 2 -->
-        <div class="card card-compact bg-base-100 shadow-xl">
+        <div
+          class="card card-compact bg-base-100 shadow-xl group hover:shadow-2xl transition-all duration-300"
+        >
           <figure class="px-6 pt-6">
             <img
               src="images/shoes/shoe-2.png"
               alt="Nike 360 Shoes"
-              class="rounded-xl h-60 object-contain w-full"
+              class="rounded-xl h-60 object-contain w-full group-hover:scale-110 transition-transform duration-300"
+              loading="lazy"
             />
           </figure>
           <div class="card-body">
@@ -375,18 +451,26 @@
               <span class="text-xl md:text-2xl font-bold text-pink-500"
                 >$334</span
               >
-              <button class="btn btn-primary">Buy Now</button>
+              <button
+                class="btn btn-primary"
+                @click="$store.cart.add({id: 2, name: 'Nike 360', price: 334, category: 'Shoes', image: 'images/shoes/shoe-2.png'})"
+              >
+                Buy Now
+              </button>
             </div>
           </div>
         </div>
 
         <!-- Shoe 3 -->
-        <div class="card card-compact bg-base-100 shadow-xl">
+        <div
+          class="card card-compact bg-base-100 shadow-xl group hover:shadow-2xl transition-all duration-300"
+        >
           <figure class="px-6 pt-6">
             <img
               src="images/shoes/shoe-3.png"
               alt="Red Air Shoes"
-              class="rounded-xl h-60 object-contain w-full"
+              class="rounded-xl h-60 object-contain w-full group-hover:scale-110 transition-transform duration-300"
+              loading="lazy"
             />
           </figure>
           <div class="card-body">
@@ -399,7 +483,12 @@
               <span class="text-xl md:text-2xl font-bold text-pink-500"
                 >$123</span
               >
-              <button class="btn btn-primary">Buy Now</button>
+              <button
+                class="btn btn-primary"
+                @click="$store.cart.add({id: 3, name: 'Red Air', price: 123, category: 'Shoes', image: 'images/shoes/shoe-3.png'})"
+              >
+                Buy Now
+              </button>
             </div>
           </div>
         </div>
@@ -417,12 +506,15 @@
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <!-- Bag 1 -->
-        <div class="card card-compact bg-base-100 shadow-xl">
+        <div
+          class="card card-compact bg-base-100 shadow-xl group hover:shadow-2xl transition-all duration-300"
+        >
           <figure class="px-6 pt-6">
             <img
               src="images/bags/bag-1.png"
               alt="Red Color Bag"
-              class="rounded-xl h-60 object-contain w-full"
+              class="rounded-xl h-60 object-contain w-full group-hover:scale-110 transition-transform duration-300"
+              loading="lazy"
             />
           </figure>
           <div class="card-body">
@@ -435,18 +527,26 @@
               <span class="text-xl md:text-2xl font-bold text-pink-500"
                 >$437</span
               >
-              <button class="btn btn-primary">Buy Now</button>
+              <button
+                class="btn btn-primary"
+                @click="$store.cart.add({id: 4, name: 'Red Color Bag', price: 437, category: 'Bags', image: 'images/bags/bag-1.png'})"
+              >
+                Buy Now
+              </button>
             </div>
           </div>
         </div>
 
         <!-- Bag 2 -->
-        <div class="card card-compact bg-base-100 shadow-xl">
+        <div
+          class="card card-compact bg-base-100 shadow-xl group hover:shadow-2xl transition-all duration-300"
+        >
           <figure class="px-6 pt-6">
             <img
               src="images/bags/bag-2.png"
               alt="Blue Color Bag"
-              class="rounded-xl h-60 object-contain w-full"
+              class="rounded-xl h-60 object-contain w-full group-hover:scale-110 transition-transform duration-300"
+              loading="lazy"
             />
           </figure>
           <div class="card-body">
@@ -459,18 +559,26 @@
               <span class="text-xl md:text-2xl font-bold text-pink-500"
                 >$266</span
               >
-              <button class="btn btn-primary">Buy Now</button>
+              <button
+                class="btn btn-primary"
+                @click="$store.cart.add({id: 5, name: 'Blue Color Bag', price: 266, category: 'Bags', image: 'images/bags/bag-2.png'})"
+              >
+                Buy Now
+              </button>
             </div>
           </div>
         </div>
 
         <!-- Bag 3 -->
-        <div class="card card-compact bg-base-100 shadow-xl">
+        <div
+          class="card card-compact bg-base-100 shadow-xl group hover:shadow-2xl transition-all duration-300"
+        >
           <figure class="px-6 pt-6">
             <img
               src="images/bags/bag-3.png"
               alt="Black Color Bag"
-              class="rounded-xl h-60 object-contain w-full"
+              class="rounded-xl h-60 object-contain w-full group-hover:scale-110 transition-transform duration-300"
+              loading="lazy"
             />
           </figure>
           <div class="card-body">
@@ -482,7 +590,12 @@
               <span class="text-xl md:text-2xl font-bold text-pink-500"
                 >$777</span
               >
-              <button class="btn btn-primary">Buy Now</button>
+              <button
+                class="btn btn-primary"
+                @click="$store.cart.add({id: 6, name: 'Black Color Bag', price: 777, category: 'Bags', image: 'images/bags/bag-3.png'})"
+              >
+                Buy Now
+              </button>
             </div>
           </div>
         </div>
@@ -525,7 +638,65 @@
       </div>
     </footer>
 
+    <!-- Toast notifications container -->
+    <div id="toast-container" class="toast toast-top toast-end z-50"></div>
+
     <!-- JavaScript (Vite handles TS module) -->
     <script type="module" src="/src/js/main.ts"></script>
+
+    <!-- Alpine.js Store -->
+    <script>
+      document.addEventListener("alpine:init", () => {
+        Alpine.store("cart", {
+          items: JSON.parse(localStorage.getItem("epanda-cart") || "[]"),
+
+          get count() {
+            return this.items.length;
+          },
+
+          get total() {
+            return this.items.reduce((sum, item) => sum + item.price, 0);
+          },
+
+          add(product) {
+            this.items.push(product);
+            this.save();
+            this.showNotification(`Added ${product.name} to cart!`);
+          },
+
+          remove(id) {
+            this.items = this.items.filter((item) => item.id !== id);
+            this.save();
+          },
+
+          save() {
+            localStorage.setItem("epanda-cart", JSON.stringify(this.items));
+          },
+
+          showNotification(message) {
+            const toast = document.createElement("div");
+            toast.className = "alert alert-success mb-2 animate-fade-in";
+            toast.innerHTML = `<span>${message}</span>`;
+            document.getElementById("toast-container").appendChild(toast);
+
+            setTimeout(() => {
+              toast.remove();
+            }, 3000);
+          },
+        });
+      });
+    </script>
+
+    <!-- Loading script -->
+    <script>
+      window.addEventListener("load", () => {
+        setTimeout(() => {
+          document.getElementById("loading-spinner").style.opacity = "0";
+          setTimeout(() => {
+            document.getElementById("loading-spinner").style.display = "none";
+          }, 500);
+        }, 1000);
+      });
+    </script>
   </body>
 </html>
